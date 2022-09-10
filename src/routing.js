@@ -1,5 +1,6 @@
 const express = require('express')
 const mainRouter = express.Router()
+const { HTTPErrorHandler } = require('./exception/HTTPException')
 const { getComment, postComment } = require('./controller/comment')
 const {
 	getUser,
@@ -7,7 +8,9 @@ const {
 	createUser,
 	updateUserInformation,
 	deleteUser,
+	authenticateUser,
 } = require("./controller/users")
+const { extractAuthenticationInfo } = require('./middleware/auth')
 
 mainRouter.get("/comment", getComment)
 mainRouter.post("/comment", postComment)
@@ -17,10 +20,14 @@ let mw = (req, res, next) => {
 	next()
 	res.json({ message: "fail b/c mw" })
 }
+mainRouter.post("/sign-up", createUser) // dang ky
+mainRouter.post("/sign-in", authenticateUser) // dang nhap
+
 mainRouter.get("/user", mw, getUser)
 mainRouter.get("/user/:", getUserById)
-mainRouter.post("/user", createUser)
-mainRouter.put("/user", updateUserInformation)
+
+mainRouter.put("/user", extractAuthenticationInfo, updateUserInformation)
 mainRouter.delete("/user", deleteUser)
 
+mainRouter.use(HTTPErrorHandler)
 module.exports = mainRouter

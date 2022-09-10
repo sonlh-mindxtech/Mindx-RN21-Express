@@ -11,8 +11,9 @@ app.use(logger("dev"))  // logger
 app.use(main)
 // outer-most error handler
 let error_handler = (err, req, res, next) => {
-	res.json({
-		message: err.message
+	console.error(err)
+	res.status(500).json({
+		detail: err.message
 	})
 }
 app.use(error_handler)

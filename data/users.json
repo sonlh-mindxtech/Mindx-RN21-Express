@@ -1,19 +1,20 @@
 [
-	{
-		"id": "zyx",
-		"name": "Son",
-		"email": "sonlh@hotmail.com",
-		"address": "Ho Chi Minh"
-	},
-	{
-		"id": "abc",
-		"name": "Son",
-		"email": "sonlh2@hotmail.com",
-		"address": "Ho Chi Minh"
-	},
-	{
-		"id": "uae",
-		"email": "son-uae@hotmail.com",
-		"name": "son"
-	}
+    {
+        "email": "sonlh-1",
+        "name": "LuuHoangSon",
+        "address": "xxx",
+        "password": "aabbccdd"
+    },
+    {
+        "email": "sonlh-2",
+        "name": "Son Luu Pro 3",
+        "address": "Some where in HCM",
+        "password": "aabbccddee"
+    },
+    {
+        "email": "sonlh-3",
+        "name": "Son Luu Pro 3",
+        "address": "Some where in HCM",
+        "password": "aabbccddeeff"
+    }
 ]
