@@ -36,3 +36,11 @@ Cải tiến các endpoint sau. Tất cả dữ liệu phải được lưu vào
 
 4. PUT /user/:id
 -  Cập nhật thông tin của user dựa trên id. thông  tin mới của user được đính kèm trong request body
+
+
+# Session 5:
+- Tìm hiểu về update/delete trong mongo db
+- Tìm hiểu kỹ query/update DSL (operator) trong mongo. https://www.mongodb.com/docs/manual/reference/operator/
+-
+- Làm bài tập workbook
+- Thay thế 4 endpoint tương tác với user từ file -> tương tác với database

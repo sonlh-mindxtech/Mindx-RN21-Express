@@ -1,6 +1,9 @@
 let fs = require("fs")
+const { nextTick } = require("process")
 let { HTTPError } = require('../exception/HTTPException')
 let { encodeToken } = require("./../helper/authenticate")
+let { db } = require('./../helper/connect')
+const asyncHandler = require('express-async-handler')
 let getUser = (req, res) => {
 	// res.json({ message: "Hi" })
 	res.status(404)
@@ -20,29 +23,33 @@ let getUserById = (req, res) => {
 	}
 
 }
-let createUser = (req, res) => {
-	// phai co express.json()
-	let users = fs.readFileSync("data/users.json", { encoding: 'utf8' })
-	users = JSON.parse(users)
-	let user = {
-		email: req.body.email,
-		name: req.body.name,
-		address: req.body.address,
-		password: req.body.password
+
+
+let createUser = asyncHandler(
+	async (req, res) => {
+		let user = {
+			email: req.body.email,
+			name: req.body.name,
+			address: req.body.address,
+			password: req.body.password
+		}
+		// involve logic
+		// email unique
+		// password validation -> 8 char
+
+		let result = await db.db.collection("user").findOne({
+			"email": user.email
+		})
+		if (result != null) throw new HTTPError(404, "Email is existed!")
+		await db.db.collection("user").insert(user)
+		res.status(201).json({
+			message: "Created"
+		})
+
 	}
-	// involve logic
-	// email unique
-	// password validation -> 8 char
-	let emailList = users.map(e => e.email)
-	if (emailList.includes(credentials.email)) throw new HTTPError(400, "Email already existed")
-	if (user.password.length < 8) throw new HTTPError(400, "Password is not strong")
-	// return exception 
-	// got wrong logic
-	users.push(user)
-	let usersStr = JSON.stringify(users)
-	fs.writeFileSync("data/users.json", usersStr, { encoding: 'utf-8' })
-	res.status(201).json({ message: "Created!" })
-}
+)
+
+
 let authenticateUser = (req, res) => {
 	let credentials = {
 		email: req.body.email,
@@ -72,10 +79,10 @@ let updateUserInformation = (req, res) => {
 	user.address = new_information.address
 	let emailList = users.map(e => e.email)
 	let userIndex = emailList.indexOf(user.email)
-	if (userIndex == -1) throw new HTTPError(404,"Not Found")
+	if (userIndex == -1) throw new HTTPError(404, "Not Found")
 
 	users[userIndex] = user
-	let usersStr = JSON.stringify(users,null,4)
+	let usersStr = JSON.stringify(users, null, 4)
 	fs.writeFileSync("data/users.json", usersStr, { encoding: 'utf-8' })
 	res.status(200).json({ message: "Updated!" })
 }
