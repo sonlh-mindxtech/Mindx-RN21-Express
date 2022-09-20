@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 // ->
 let express = require("express")
 let logger = require("morgan")
@@ -21,5 +21,6 @@ let error_handler = (err, req, res, next) => {
 }
 app.use(error_handler)
 
-
+// postwoman proxy: 
+// curl 
 module.exports = app; // chay = node 

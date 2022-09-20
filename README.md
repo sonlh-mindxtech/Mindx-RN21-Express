@@ -44,3 +44,54 @@ Cải tiến các endpoint sau. Tất cả dữ liệu phải được lưu vào
 -
 - Làm bài tập workbook
 - Thay thế 4 endpoint tương tác với user từ file -> tương tác với database
+
+
+// Session 6
+1. Tìm user mà có đuôi email là `@sonlh+3.com`
+
+a = await collection('user').find(
+	{
+
+} => query composed by query operatior (DSL) => get data => X transform data
+)
+aggregation => transform data => get 
+[
+	{}, => input -> aggregation operator -> output 
+	{}
+]
+
+find(
+	{
+		email: {
+			"$regex":"@sonlh\+3\.com"
+			}
+		
+	}
+).toArray()
+a.length = ?
+
+[
+	{
+		a : b,
+		c : [
+			d,e,f
+		]
+	}
+]
+=> 
+[ 
+	{
+		a : b,
+		c : d
+	},
+	{
+		a : b,
+		c : e
+	},
+	{
+		a : b,
+		c : f
+	}
+]
+
+- Làm BTVN Session 7: Workbook
